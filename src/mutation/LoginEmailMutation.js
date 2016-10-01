@@ -1,0 +1,60 @@
+// @flow
+
+import { GraphQLString, GraphQLNonNull } from 'graphql';
+import { mutationWithClientMutationId } from 'graphql-relay';
+
+import { User } from '../models';
+import { generateToken } from '../auth';
+
+export default mutationWithClientMutationId({
+  name: 'LoginEmail',
+  inputFields: {
+    email: {
+      type: GraphQLString,
+    },
+    password: {
+      type: GraphQLString,
+    }
+  },
+  mutateAndGetPayload: async ({ email, password }) => {
+    if (!email || !password) {
+      return {
+        token: null,
+        error: 'INVALID_EMAIL_PASSWORD',
+      }
+    }
+
+    const user = await User.findOne({ email: email.toLowerCase() });
+
+    if (!user) {
+      return {
+        token: null,
+        error: 'INVALID_EMAIL_PASSWORD',
+      }
+    }
+
+    const correctPassword = await user.authenticate(password);
+
+    if (!correctPassword) {
+      return {
+        token: null,
+        error: 'INVALID_EMAIL_PASSWORD',
+      }
+    }
+
+    return {
+      token: generateToken(user),
+      error: null,
+    }
+  },
+  outputFields: {
+    token: {
+      type: GraphQLString,
+      resolve: ({token}) => token,
+    },
+    error: {
+      type: GraphQLString,
+      resolve: ({error}) => error,
+    }
+  },
+});

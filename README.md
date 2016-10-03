@@ -40,4 +40,9 @@ awesome > M.User.find()
 ```
 
 ### Schema
+Update your schema
+```bash
+npm run update-schema
+```
+
 Take a look on the [Schema](https://github.com/sibelius/graphql-dataloader-boilerplate/blob/master/data/schema.graphql)

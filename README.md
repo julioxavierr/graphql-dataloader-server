@@ -1,5 +1,7 @@
 # GraphQL DataLoader Boilerplate
 
+[![CircleCI](https://circleci.com/gh/sibelius/graphql-dataloader-boilerplate.svg?style=svg)](https://circleci.com/gh/sibelius/graphql-dataloader-boilerplate)
+
 Very simple boilerplate using GraphQL and DataLoader
 
 ## Command

@@ -10,6 +10,6 @@
     "generator-star-spacing": 0,
   },
   "env": {
-    "mocha": true
+    "jest": true
   }
 }

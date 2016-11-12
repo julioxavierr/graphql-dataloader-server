@@ -3,7 +3,6 @@
 import {
   GraphQLString,
   GraphQLNonNull,
-  GraphQLID,
 } from 'graphql';
 import {
   mutationWithClientMutationId,
@@ -17,36 +16,29 @@ export default mutationWithClientMutationId({
   name: 'RegisterEmail',
   inputFields: {
     name: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLString),
     },
     email: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLString),
     },
     password: {
-      type: GraphQLString,
-    }
+      type: new GraphQLNonNull(GraphQLString),
+    },
   },
   mutateAndGetPayload: async ({ name, email, password }) => {
-    if(!name || !email || !password) {
-      return {
-        token: null,
-        error: 'INVALID_EMAIL_PASSWORD',
-      }
-    }
-
-    let user = await User.findOne({email: email.toLowerCase()});
+    let user = await User.findOne({ email: email.toLowerCase() });
 
     if (user) {
       return {
         token: null,
         error: 'EMAIL_ALREADY_IN_USE',
-      }
+      };
     }
 
     user = new User({
       name,
       email,
-      password: password,
+      password,
     });
     await user.save();
 
@@ -58,11 +50,11 @@ export default mutationWithClientMutationId({
   outputFields: {
     token: {
       type: GraphQLString,
-      resolve: ({token}) => token,
+      resolve: ({ token }) => token,
     },
     error: {
       type: GraphQLString,
-      resolve: ({error}) => error,
-    }
+      resolve: ({ error }) => error,
+    },
   },
 });

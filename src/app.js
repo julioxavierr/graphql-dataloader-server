@@ -2,7 +2,7 @@
 
 import 'isomorphic-fetch';
 
-import koa from 'koa';
+import Koa from 'koa';
 import cors from 'koa-cors';
 import graphqlHTTP from 'koa-graphql';
 import convert from 'koa-convert';
@@ -12,13 +12,13 @@ import { schema } from './schema';
 import { jwtSecret } from './config';
 import { getUser } from './auth';
 
-const app = new koa();
+const app = new Koa();
 
 app.keys = jwtSecret;
 
 app.use(logger());
 app.use(convert(cors()));
-app.use(convert(graphqlHTTP(async req => {
+app.use(convert(graphqlHTTP(async (req) => {
   const { user } = await getUser(req.header.authorization);
 
   return {

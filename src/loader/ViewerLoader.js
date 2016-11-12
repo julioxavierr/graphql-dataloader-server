@@ -12,13 +12,8 @@ export default class Viewer {
   }
 
   static async load(userId) {
-    //Test if userId is not null, otherwise this is a anoymous session
-    const id = userId
-      ? userId
-      : null;
-
-    let data = {
-      id,
+    const data = {
+      id: userId,
     };
 
     return new Viewer(data);

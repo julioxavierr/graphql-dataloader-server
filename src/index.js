@@ -1,11 +1,10 @@
 // @flow
-'use strict';
 import 'babel-polyfill';
 import app from './app';
-import { connectDatabase } from './database';
+import connectDatabase from './database';
 import { graphqlPort } from './config';
 
-(async() => {
+(async () => {
   try {
     const info = await connectDatabase();
     console.log(`Connected to ${info.host}:${info.port}/${info.name}`);

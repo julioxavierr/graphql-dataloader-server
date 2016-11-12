@@ -7,7 +7,7 @@ import REPL from 'repl';
 import replPromised from 'repl-promised';
 import history from 'repl.history';
 
-import { connectDatabase } from './src/database';
+import connectDatabase from './src/database';
 import * as M from './src/models';
 import { generateToken } from './src/auth';
 

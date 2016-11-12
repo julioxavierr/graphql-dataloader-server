@@ -1,14 +1,9 @@
 import {
   GraphQLString,
   GraphQLNonNull,
-  GraphQLList,
-  GraphQLInt,
-  GraphQLBoolean,
 } from 'graphql';
 import {
   mutationWithClientMutationId,
-  fromGlobalId,
-  toGlobalId,
 } from 'graphql-relay';
 import MeType from '../type/MeType';
 
@@ -23,8 +18,8 @@ export default mutationWithClientMutationId({
       description: 'user new password',
     },
   },
-  mutateAndGetPayload: async ({oldPassword, password}, {user}) => {
-    if(!user) {
+  mutateAndGetPayload: async ({ oldPassword, password }, { user }) => {
+    if (!user) {
       throw new Error('invalid user');
     }
 
@@ -46,13 +41,13 @@ export default mutationWithClientMutationId({
   outputFields: {
     error: {
       type: GraphQLString,
-      resolve: ({error}) => error,
+      resolve: ({ error }) => error,
     },
     me: {
       type: MeType,
-      resolve: (obj, args, context) => {
-        return context.user;
-      },
-    }
+      resolve: (obj, args, context) =>
+         context.user
+      ,
+    },
   },
 });

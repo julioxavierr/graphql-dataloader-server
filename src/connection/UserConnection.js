@@ -16,6 +16,6 @@ export default connectionDefinitions({
   connectionFields: {
     count: {
       type: GraphQLInt,
-    }
-  }
+    },
+  },
 });

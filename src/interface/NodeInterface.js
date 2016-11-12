@@ -23,6 +23,8 @@ const {
     if (type === 'Viewer') {
       return await ViewerLoader.load(id);
     }
+
+    return null;
   },
   // A method that maps from an object to a type
   (obj) => {
@@ -33,7 +35,9 @@ const {
     if (obj instanceof ViewerLoader) {
       return ViewerType;
     }
-  }
+
+    return null;
+  },
 );
 
 export const NodeInterface = nodeInterface;

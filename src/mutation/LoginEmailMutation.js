@@ -10,27 +10,20 @@ export default mutationWithClientMutationId({
   name: 'LoginEmail',
   inputFields: {
     email: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLString),
     },
     password: {
-      type: GraphQLString,
-    }
+      type: new GraphQLNonNull(GraphQLString),
+    },
   },
   mutateAndGetPayload: async ({ email, password }) => {
-    if (!email || !password) {
-      return {
-        token: null,
-        error: 'INVALID_EMAIL_PASSWORD',
-      }
-    }
-
     const user = await User.findOne({ email: email.toLowerCase() });
 
     if (!user) {
       return {
         token: null,
         error: 'INVALID_EMAIL_PASSWORD',
-      }
+      };
     }
 
     const correctPassword = await user.authenticate(password);
@@ -39,22 +32,22 @@ export default mutationWithClientMutationId({
       return {
         token: null,
         error: 'INVALID_EMAIL_PASSWORD',
-      }
+      };
     }
 
     return {
       token: generateToken(user),
       error: null,
-    }
+    };
   },
   outputFields: {
     token: {
       type: GraphQLString,
-      resolve: ({token}) => token,
+      resolve: ({ token }) => token,
     },
     error: {
       type: GraphQLString,
-      resolve: ({error}) => error,
-    }
+      resolve: ({ error }) => error,
+    },
   },
 });

@@ -5,7 +5,7 @@ import { User } from './models';
 import { jwtSecret } from './config';
 
 export async function getUser(token: string) {
-  console.log('token: ' , token);
+  console.log('token: ', token);
 
   if (!token) return { user: null };
 

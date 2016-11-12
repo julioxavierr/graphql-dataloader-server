@@ -1,6 +1,5 @@
 // @flow
 
-'use strict';
 
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt-as-promised';
@@ -17,7 +16,7 @@ const Schema = new mongoose.Schema({
   email: {
     type: String,
     required: false,
-    index: true
+    index: true,
   },
   active: {
     type: Boolean,
@@ -37,7 +36,7 @@ Schema.methods.updatePassword = function (oldPassword, newPassword, done) {
   }
 
   this.password = bcrypt.hashSync(newPassword);
-  this.save(function (err, user) {
+  this.save((err, user) => {
     if (err) {
       return done(err);
     }
@@ -47,7 +46,7 @@ Schema.methods.updatePassword = function (oldPassword, newPassword, done) {
 };
 
 Schema
-  .pre('save', function(next) {
+  .pre('save', function (next) {
     // Hash the password
     if (this.isModified('password')) {
       this.encryptPassword(this.password)
@@ -55,7 +54,7 @@ Schema
           this.password = hash;
           next();
         })
-        .catch((err) => next(err));
+        .catch(err => next(err));
     } else {
       return next();
     }
@@ -71,7 +70,7 @@ Schema.methods = {
   },
   encryptPassword(password) {
     return bcrypt.hash(password, 8);
-  }
+  },
 };
 
 

@@ -4,8 +4,8 @@ export default class ConnectionFromMongoCursor {
 
   static PREFIX = 'mongo:';
 
-  static base64 = (str) => (new Buffer(str, 'ascii')).toString('base64');
-  static unbase64 = (b64) => (new Buffer(b64, 'base64')).toString('ascii');
+  static base64 = str => (new Buffer(str, 'ascii')).toString('base64');
+  static unbase64 = b64 => (new Buffer(b64, 'base64')).toString('ascii');
 
   /**
    * Rederives the offset from the cursor string
@@ -41,12 +41,13 @@ export default class ConnectionFromMongoCursor {
    */
   static async connectionFromMongoCursor(viewer, inMongoCursor, args = {}, loader) {
     const mongodbCursor = inMongoCursor;
-    let { after, before, first, last } = args;
+    const { after, before } = args;
+    let { first, last } = args;
 
     // Limit the maximum number of elements in a query
-    if(!first && !last) first = 10;
-    if(first > 1000) first = 1000;
-    if(last > 1000) last = 1000;
+    if (!first && !last) first = 10;
+    if (first > 1000) first = 1000;
+    if (last > 1000) last = 1000;
 
     const count = await inMongoCursor.count();
     // returning mongoose query obj to find again after count
@@ -77,7 +78,7 @@ export default class ConnectionFromMongoCursor {
 
 
     // Short circuit if limit is 0; in that case, mongodb doesn't limit at all
-    let slice = await mongodbCursor.exec();
+    const slice = await mongodbCursor.exec();
 
     const edges = slice.map((value, index) => ({
       cursor: ConnectionFromMongoCursor.offsetToCursor(startOffset + index),
@@ -91,7 +92,7 @@ export default class ConnectionFromMongoCursor {
 
     return {
       edges,
-      count: count,
+      count,
       pageInfo: {
         startCursor: firstEdge ? firstEdge.cursor : null,
         endCursor: lastEdge ? lastEdge.cursor : null,

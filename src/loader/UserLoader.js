@@ -1,7 +1,6 @@
 // @flow
-
-import { User as UserModel } from '../models';
 import DataLoader from 'dataloader';
+import { User as UserModel } from '../models';
 import ConnectionFromMongoCursor from '../connection/ConnectionFromMongoCursor';
 
 type UserType = {
@@ -20,7 +19,7 @@ export default class User {
   active: boolean;
 
   static userLoader = new DataLoader(
-    ids => Promise.all(ids.map((id) => UserModel.findOne({ _id: id })))
+    ids => Promise.all(ids.map(id => UserModel.findOne({ _id: id }))),
   );
 
   constructor(data: UserType, viewer) {
@@ -51,7 +50,7 @@ export default class User {
   }
 
   static async loadUsers(viewer, args) {
-    const where = args.search ? { name: { $regex: new RegExp(`^${args.search}`, 'ig') }} : {};
+    const where = args.search ? { name: { $regex: new RegExp(`^${args.search}`, 'ig') } } : {};
     const users = UserModel
       .find(where, { _id: 1 });
 

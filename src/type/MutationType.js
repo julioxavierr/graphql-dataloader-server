@@ -1,7 +1,7 @@
 // @flow
 
 import {
-  GraphQLObjectType
+  GraphQLObjectType,
 } from 'graphql';
 
 import LoginEmail from '../mutation/LoginEmailMutation';

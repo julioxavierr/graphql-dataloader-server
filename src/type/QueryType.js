@@ -14,9 +14,9 @@ export default new GraphQLObjectType({
     viewer: {
       type: ViewerType,
       args: {},
-      resolve: async (obj, args, {user}) => {
-        return await ViewerLoader.load(user ? user._id : null);
-      },
+      resolve: async (obj, args, { user }) =>
+         await ViewerLoader.load(user ? user._id : null)
+      ,
     },
   }),
 });

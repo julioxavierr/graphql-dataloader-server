@@ -32,10 +32,12 @@ export default new GraphQLObjectType({
     user: {
       type: UserType,
       args: {
-        id: {type: new GraphQLNonNull(GraphQLID)},
+        id: {
+          type: new GraphQLNonNull(GraphQLID),
+        },
       },
-      resolve: (obj, args, {user}) => {
-        const { type, id } = fromGlobalId(args.id);
+      resolve: (obj, args, { user }) => {
+        const { id } = fromGlobalId(args.id);
         return UserLoader.load(user, id);
       },
     },
@@ -47,9 +49,7 @@ export default new GraphQLObjectType({
           type: GraphQLString,
         },
       },
-      resolve: async (obj, args, {user}) => {
-        return UserLoader.loadUsers(user, args);
-      },
+      resolve: (obj, args, { user }) => UserLoader.loadUsers(user, args),
     },
   }),
   interfaces: () => [NodeInterface],

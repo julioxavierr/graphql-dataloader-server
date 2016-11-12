@@ -13,8 +13,8 @@ const {
   nodeInterface,
 } = nodeDefinitions(
   // A method that maps from a global id to an object
-  async (globalId, {user}) => {
-    const {id, type} = fromGlobalId(globalId);
+  async (globalId, { user }) => {
+    const { id, type } = fromGlobalId(globalId);
 
     // console.log('id, type: ', type, id, globalId);
     if (type === 'User') {

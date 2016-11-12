@@ -30,21 +30,6 @@ const Schema = new mongoose.Schema({
   collection: 'user',
 });
 
-Schema.methods.updatePassword = function (oldPassword, newPassword, done) {
-  if (!bcrypt.compareSync(oldPassword, this.password)) {
-    return done(new Error('Invalid Password'));
-  }
-
-  this.password = bcrypt.hashSync(newPassword);
-  this.save((err, user) => {
-    if (err) {
-      return done(err);
-    }
-
-    return done(null, user);
-  });
-};
-
 Schema
   .pre('save', function (next) {
     // Hash the password

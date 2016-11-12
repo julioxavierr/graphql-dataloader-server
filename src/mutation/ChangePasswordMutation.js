@@ -11,7 +11,7 @@ export default mutationWithClientMutationId({
   name: 'ChangePassword',
   inputFields: {
     oldPassword: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLString),
     },
     password: {
       type: new GraphQLNonNull(GraphQLString),

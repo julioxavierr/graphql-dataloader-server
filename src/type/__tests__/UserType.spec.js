@@ -25,9 +25,11 @@ it('should not show email of other users', async () => {
       viewer {
         users(first: 2) {
           edges {
-            node {             
+            node {  
+              _id
               name
               email
+              active
             }
           }
         }

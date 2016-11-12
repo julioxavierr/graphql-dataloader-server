@@ -38,7 +38,10 @@ it('should return the current user when user is logged in', async () => {
     query Q {
       viewer {
         me {
-          name        
+          _id
+          name
+          email
+          active
         }
       }
     }

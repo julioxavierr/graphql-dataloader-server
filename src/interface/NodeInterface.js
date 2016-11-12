@@ -2,10 +2,10 @@
 
 import { nodeDefinitions, fromGlobalId } from 'graphql-relay';
 
-import Viewer from '../loaders/Viewer';
+import ViewerLoader from '../loader/ViewerLoader';
 import ViewerType from '../type/ViewerType';
 
-import User from '../loaders/User';
+import UserLoader from '../loader/UserLoader';
 import UserType from '../type/UserType';
 
 const {
@@ -18,19 +18,19 @@ const {
 
     // console.log('id, type: ', type, id, globalId);
     if (type === 'User') {
-      return await User.load(user, id);
+      return await UserLoader.load(user, id);
     }
     if (type === 'Viewer') {
-      return await Viewer.load(id);
+      return await ViewerLoader.load(id);
     }
   },
   // A method that maps from an object to a type
   (obj) => {
     // console.log('obj: ', typeof obj, obj.constructor);
-    if (obj instanceof User) {
+    if (obj instanceof UserLoader) {
       return UserType;
     }
-    if (obj instanceof Viewer) {
+    if (obj instanceof ViewerLoader) {
       return ViewerType;
     }
   }

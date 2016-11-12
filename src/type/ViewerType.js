@@ -17,7 +17,7 @@ import { NodeInterface } from '../interface/NodeInterface';
 import MeType from './MeType';
 
 import UserType from './UserType';
-import UserLoader from '../loaders/User';
+import UserLoader from '../loader/UserLoader';
 import UserConnection from '../connection/UserConnection';
 
 export default new GraphQLObjectType({

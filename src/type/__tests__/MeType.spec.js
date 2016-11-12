@@ -1,9 +1,11 @@
-import mongoose from 'mongoose';
 import { graphql } from 'graphql';
 import { schema } from '../../schema';
 import {
   User,
 } from '../../models';
+import { setupTest } from '../../../test/helper';
+
+beforeEach(async () => setupTest());
 
 it('should be null when user is not logged in', async () => {
   const query = `

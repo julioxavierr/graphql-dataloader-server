@@ -37,7 +37,7 @@ export default new GraphQLObjectType({
       resolve: (obj, args, {user}) => {
         const { type, id } = fromGlobalId(args.id);
         return UserLoader.load(user, id);
-      }
+      },
     },
     users: {
       type: UserConnection.connectionType,
@@ -47,9 +47,9 @@ export default new GraphQLObjectType({
           type: GraphQLString,
         },
       },
-      resolve: async ( obj, args, {user} ) => {
+      resolve: async (obj, args, {user}) => {
         return UserLoader.loadUsers(user, args);
-      }
+      },
     },
   }),
   interfaces: () => [NodeInterface],

@@ -54,8 +54,7 @@
     "collectCoverage": true,
     "moduleNameMapper": {
       "^mongoose$": "<rootDir>/node_modules/mongoose"
-    },
-    "setupTestFrameworkScriptFile": "./test/mongooseConnection.js"
+    }
   },
   "license": "MIT",
   "main": "index.js",

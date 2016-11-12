@@ -23,32 +23,37 @@ export default class User {
     ids => Promise.all(ids.map((id) => UserModel.findOne({ _id: id })))
   );
 
-  constructor(data: UserType) {
+  constructor(data: UserType, viewer) {
     this.id = data.id;
     this._id = data._id;
     this.name = data.name;
-    this.email = data.email;
-    this.active = data.active
+
+    // you can only see your own email, and your active status
+    if (viewer && viewer._id.equals(data._id)) {
+      this.email = data.email;
+      this.active = data.active;
+    }
   }
 
   static viewerCanSee(viewer, data) {
-    //Anyone can se another user
+    // Anyone can se another user
     return true;
   }
 
   static async load(viewer, id) {
     if (!id) return null;
 
-    let data = await User.userLoader.load(id);
+    const data = await User.userLoader.load(id);
 
-    return User.viewerCanSee(viewer, data) ? new User(data) : null;
+    if (!data) return null;
+
+    return User.viewerCanSee(viewer, data) ? new User(data, viewer) : null;
   }
 
   static async loadUsers(viewer, args) {
-    const where = args.search ? {name: {$regex: new RegExp(`^${args.search}`, 'ig')}} : {};
+    const where = args.search ? { name: { $regex: new RegExp(`^${args.search}`, 'ig') }} : {};
     const users = UserModel
-      .find(where, {'_id':1})
-      .sort('-updatedAt');
+      .find(where, { _id: 1 });
 
     return ConnectionFromMongoCursor.connectionFromMongoCursor(viewer, users, args, User.load);
   }

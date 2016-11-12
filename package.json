@@ -50,6 +50,8 @@
       "lcov",
       "html"
     ],
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
     "moduleNameMapper": {
       "^mongoose$": "<rootDir>/node_modules/mongoose"
     },

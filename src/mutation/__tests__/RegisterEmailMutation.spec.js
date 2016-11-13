@@ -2,11 +2,11 @@ import { graphql } from 'graphql';
 import { schema } from '../../schema';
 import {
   User,
-} from '../../models';
+} from '../../model';
 import { generateToken } from '../../auth';
 import { setupTest } from '../../../test/helper';
 
-beforeEach(async () => setupTest());
+beforeEach(async () => await setupTest());
 
 it('should not register with the an existing email', async () => {
   const user = new User({

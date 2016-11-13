@@ -2,11 +2,11 @@ import { graphql } from 'graphql';
 import { schema } from '../../schema';
 import {
   User,
-} from '../../models';
+} from '../../model';
 import { generateToken } from '../../auth';
 import { setupTest } from '../../../test/helper';
 
-beforeEach(async () => setupTest());
+beforeEach(async () => await setupTest());
 
 it('should not login if email is not in the database', async () => {
   const query = `

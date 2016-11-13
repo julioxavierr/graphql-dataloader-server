@@ -11,8 +11,8 @@ dotenvSafe.load({
 });
 
 // Database Settings
-const dBdevelopment = 'mongodb://localhost/awesome';
-const dBproduction = 'mongodb://localhost/awesome';
+const dBdevelopment = 'mongodb://localhost/database';
+const dBproduction = 'mongodb://localhost/database';
 
 // Test Database Settings
 // const test = 'mongodb://localhost/awesome-test';

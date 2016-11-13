@@ -3,14 +3,14 @@ import { graphql } from 'graphql';
 import { schema } from '../schema';
 import {
   User,
-} from '../models';
+} from '../model';
 import { setupTest } from '../../test/helper';
 
 import { getUser, generateToken } from '../auth';
 
 const { ObjectId } = mongoose.Types;
 
-beforeEach(async () => setupTest());
+beforeEach(async () => await setupTest());
 
 describe('getUser', () => {
   it('should return an user null when token is null', async () => {

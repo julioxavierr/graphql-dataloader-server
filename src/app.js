@@ -22,7 +22,7 @@ app.use(convert(graphqlHTTP(async (req) => {
   const { user } = await getUser(req.header.authorization);
 
   return {
-    graphiql: true,
+    graphiql: process.env.NODE_ENV !== 'production',
     schema,
     context: {
       user,

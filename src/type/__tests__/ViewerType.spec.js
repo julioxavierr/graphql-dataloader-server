@@ -3,10 +3,10 @@ import { toGlobalId } from 'graphql-relay';
 import { schema } from '../../schema';
 import {
   User,
-} from '../../models';
+} from '../../model';
 import { setupTest } from '../../../test/helper';
 
-beforeEach(async () => setupTest());
+beforeEach(async () => await setupTest());
 
 it('should get user by id', async () => {
   const user = new User({

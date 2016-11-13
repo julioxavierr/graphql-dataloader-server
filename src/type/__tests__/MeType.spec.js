@@ -2,10 +2,10 @@ import { graphql } from 'graphql';
 import { schema } from '../../schema';
 import {
   User,
-} from '../../models';
+} from '../../model';
 import { setupTest } from '../../../test/helper';
 
-beforeEach(async () => setupTest());
+beforeEach(async () => await setupTest());
 
 it('should be null when user is not logged in', async () => {
   const query = `

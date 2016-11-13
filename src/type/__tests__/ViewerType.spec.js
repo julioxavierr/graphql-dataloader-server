@@ -6,7 +6,7 @@ import {
 } from '../../models';
 import { setupTest } from '../../../test/helper';
 
-beforeEach(async () => setupTest());
+beforeEach(async () => await setupTest());
 
 it('should get user by id', async () => {
   const user = new User({

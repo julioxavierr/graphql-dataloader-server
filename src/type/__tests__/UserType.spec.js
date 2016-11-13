@@ -5,7 +5,7 @@ import {
 } from '../../models';
 import { setupTest } from '../../../test/helper';
 
-beforeEach(async () => setupTest());
+beforeEach(async () => await setupTest());
 
 it('should not show email of other users', async () => {
   const user = new User({

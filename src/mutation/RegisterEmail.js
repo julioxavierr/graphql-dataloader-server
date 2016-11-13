@@ -9,7 +9,7 @@ import {
 } from 'graphql-relay';
 import {
   User,
-} from '../models';
+} from '../model';
 import { generateToken } from '../auth';
 
 export default mutationWithClientMutationId({

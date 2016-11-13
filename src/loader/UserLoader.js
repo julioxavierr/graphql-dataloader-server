@@ -1,6 +1,6 @@
 // @flow
 import DataLoader from 'dataloader';
-import { User as UserModel } from '../models';
+import { User as UserModel } from '../model';
 import ConnectionFromMongoCursor from '../connection/ConnectionFromMongoCursor';
 
 type UserType = {

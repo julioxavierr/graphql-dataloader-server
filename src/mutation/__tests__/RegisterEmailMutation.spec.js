@@ -2,7 +2,7 @@ import { graphql } from 'graphql';
 import { schema } from '../../schema';
 import {
   User,
-} from '../../models';
+} from '../../model';
 import { generateToken } from '../../auth';
 import { setupTest } from '../../../test/helper';
 

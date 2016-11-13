@@ -3,7 +3,7 @@ import { graphql } from 'graphql';
 import { schema } from '../schema';
 import {
   User,
-} from '../models';
+} from '../model';
 import { setupTest } from '../../test/helper';
 
 import { getUser, generateToken } from '../auth';

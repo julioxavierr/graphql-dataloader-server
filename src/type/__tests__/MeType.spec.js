@@ -2,7 +2,7 @@ import { graphql } from 'graphql';
 import { schema } from '../../schema';
 import {
   User,
-} from '../../models';
+} from '../../model';
 import { setupTest } from '../../../test/helper';
 
 beforeEach(async () => await setupTest());

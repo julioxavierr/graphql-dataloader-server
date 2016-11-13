@@ -3,7 +3,7 @@ import { toGlobalId } from 'graphql-relay';
 import { schema } from '../../schema';
 import {
   User,
-} from '../../models';
+} from '../../model';
 import { setupTest } from '../../../test/helper';
 
 beforeEach(async () => await setupTest());

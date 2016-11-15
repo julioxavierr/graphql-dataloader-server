@@ -28,7 +28,7 @@ describe('getUser', () => {
   });
 
   it('should return null when token do not represent a valid user', async () => {
-    const token = generateToken({ _id: new ObjectId()});
+    const token = generateToken({ _id: new ObjectId() });
     const { user } = await getUser(token);
 
     expect(user).toBe(null);

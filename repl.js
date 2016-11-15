@@ -1,6 +1,6 @@
 // @flow
 
-import "reify/repl";
+import 'reify/repl';
 import 'isomorphic-fetch';
 import 'babel-polyfill';
 import REPL from 'repl';
@@ -16,13 +16,13 @@ import { generateToken } from './src/auth';
     const info = await connectDatabase();
     console.log(`Connected to ${info.host}:${info.port}/${info.name}`);
 
-    let repl = REPL.start({
+    const repl = REPL.start({
       prompt: 'awesome > ',
     });
     repl.context.M = M;
     repl.context.generateToken = generateToken;
 
-    history(repl, process.env.HOME+'/.node_history');
+    history(repl, `${process.env.HOME}/.node_history`);
 
     replPromised.promisify(repl);
   } catch (error) {

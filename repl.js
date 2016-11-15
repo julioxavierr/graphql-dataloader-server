@@ -8,7 +8,7 @@ import replPromised from 'repl-promised';
 import history from 'repl.history';
 
 import connectDatabase from './src/database';
-import * as M from './src/models';
+import * as M from './src/model';
 import { generateToken } from './src/auth';
 
 (async() => {

@@ -5,6 +5,10 @@
 
 Very simple boilerplate using GraphQL and DataLoader
 
+## Blog Posts
+* [How to implement viewerCanSee in  GraphQL](https://medium.com/@sibelius/how-to-implement-viewercansee-in-graphql-78cc48de7464#.d9vpk6fvx)
+* [Testing a GraphQL Server using Jest](https://medium.com/@sibelius/testing-a-graphql-server-using-jest-4e00d0e4980e)
+
 ## Command
 
 #### Setup

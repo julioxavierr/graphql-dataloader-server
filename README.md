@@ -61,8 +61,10 @@ flow
 ```bash
 npm run repl
 
-awesome > M.User.find()
+awesome > const user = await M.User.find()
 ```
+
+Yep, await syntax works on the repl, it is awesome, tks @princejwesley (https://gist.github.com/princejwesley/a66d514d86ea174270210561c44b71ba)
 
 ### Schema
 Update your schema

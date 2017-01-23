@@ -33,6 +33,10 @@ If you want to move faster you should use [create-graphql](https://github.com/lu
 ```bash
 npm install
 ```
+Note: If you do not have mongoose installed, run the following line:
+```bash
+npm install mongoose
+```
 #### Develop
 ```bash
 npm run watch

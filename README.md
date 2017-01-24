@@ -33,6 +33,10 @@ If you want to move faster you should use [create-graphql](https://github.com/lu
 ```bash
 npm install
 ```
+Note: If you do not have mongodb installed, please install it:
+```bash
+brew install mongodb
+```
 #### Develop
 ```bash
 npm run watch

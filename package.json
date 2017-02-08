@@ -38,7 +38,8 @@
     "reify": "^0.4.0",
     "repl": "^0.1.3",
     "repl-promised": "^0.1.0",
-    "repl.history": "^0.1.3"
+    "repl.history": "^0.1.3",
+    "rimraf": "^2.5.4"
   },
   "jest": {
     "testEnvironment": "node",
@@ -63,7 +64,8 @@
     "url": "https://github.com/sibelius/graphql-dataloader-boilerplate"
   },
   "scripts": {
-    "build": "rm -rf dist/* && babel src --ignore *.spec.js --out-dir dist --copy-files",
+    "build": "npm run clear && babel src --ignore *.spec.js --out-dir dist --copy-files",
+    "clear": "rimraf ./dist",
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "lint": "eslint src/**",
     "repl": "nodemon --config ./repl/nodemon.json ./repl.js --exec babel-node",

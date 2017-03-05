@@ -13,9 +13,6 @@ import {
 } from 'graphql-relay';
 import { NodeInterface } from '../interface/NodeInterface';
 
-
-import MeType from './MeType';
-
 import UserType from './UserType';
 import UserLoader from '../loader/UserLoader';
 import UserConnection from '../connection/UserConnection';
@@ -26,8 +23,8 @@ export default new GraphQLObjectType({
   fields: () => ({
     id: globalIdField('Viewer'),
     me: {
-      type: MeType,
-      resolve: (root, args, { user }) => user,
+      type: UserType,
+      resolve: (root, args, { user }) => UserLoader.load(user, user._id),
     },
     user: {
       type: UserType,

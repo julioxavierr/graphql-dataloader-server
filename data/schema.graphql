@@ -1,6 +1,20 @@
+input ChangePasswordInput {
+  oldPassword: String!
+
+  # user new password
+  password: String!
+  clientMutationId: String
+}
+
+type ChangePasswordPayload {
+  error: String
+  me: User
+  clientMutationId: String
+}
+
 input LoginEmailInput {
-  email: String
-  password: String
+  email: String!
+  password: String!
   clientMutationId: String
 }
 
@@ -10,19 +24,10 @@ type LoginEmailPayload {
   clientMutationId: String
 }
 
-# Object with data related and only available to the logged user
-type Me implements Node {
-  # The ID of an object
-  id: ID!
-  _id: String
-  name: String
-  email: String
-  active: Boolean
-}
-
 type Mutation {
   LoginEmail(input: LoginEmailInput!): LoginEmailPayload
   RegisterEmail(input: RegisterEmailInput!): RegisterEmailPayload
+  ChangePassword(input: ChangePasswordInput!): ChangePasswordPayload
 }
 
 # An object with an ID
@@ -57,9 +62,9 @@ type Query {
 }
 
 input RegisterEmailInput {
-  name: String
-  email: String
-  password: String
+  name: String!
+  email: String!
+  password: String!
   clientMutationId: String
 }
 
@@ -102,7 +107,7 @@ type UserEdge {
 type Viewer implements Node {
   # The ID of an object
   id: ID!
-  me: Me
+  me: User
   user(id: ID!): User
   users(after: String, first: Int, before: String, last: Int, search: String): UserConnection
 }

@@ -44,7 +44,7 @@ describe('getUser', () => {
     const token = generateToken(viewer);
     const { user } = await getUser(token);
 
-    expect(user.name).toBe(user.name);
-    expect(user.email).toBe(user.email);
+    expect(user.name).toBe(viewer.name);
+    expect(user.email).toBe(viewer.email);
   });
 });

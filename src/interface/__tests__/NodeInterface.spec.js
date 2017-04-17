@@ -12,6 +12,7 @@ it('should load Viewer', async () => {
   const user = new User({
     name: 'user',
     email: 'user@example.com',
+    password: '123',
   });
   await user.save();
 
@@ -40,6 +41,7 @@ it('should load User', async () => {
   const user = new User({
     name: 'user',
     email: 'user@example.com',
+    password: '123',
   });
   await user.save();
 

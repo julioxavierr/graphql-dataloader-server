@@ -38,6 +38,7 @@ describe('getUser', () => {
     const viewer = new User({
       name: 'user',
       email: 'user@example.com',
+      password: '123',
     });
     await viewer.save();
 

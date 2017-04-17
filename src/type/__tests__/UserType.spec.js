@@ -11,12 +11,14 @@ it('should not show email of other users', async () => {
   const user = new User({
     name: 'user',
     email: 'user@example.com',
+    password: '123',
   });
   await user.save();
 
   const user1 = new User({
     name: 'awesome',
     email: 'awesome@example.com',
+    password: '123',
   });
   await user1.save();
 
@@ -43,9 +45,9 @@ it('should not show email of other users', async () => {
   const result = await graphql(schema, query, rootValue, context);
   const { edges } = result.data.viewer.users;
 
-  expect(edges[0].node.name).toBe(user.name);
-  expect(edges[0].node.email).toBe(user.email);
+  expect(edges[0].node.name).toBe(user1.name);
+  expect(edges[0].node.email).toBe(null);
 
-  expect(edges[1].node.name).toBe(user1.name);
-  expect(edges[1].node.email).toBe(null);
+  expect(edges[1].node.name).toBe(user.name);
+  expect(edges[1].node.email).toBe(user.email);
 });

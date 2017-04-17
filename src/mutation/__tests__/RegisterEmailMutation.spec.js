@@ -9,9 +9,13 @@ import { setupTest } from '../../../test/helper';
 beforeEach(async () => await setupTest());
 
 it('should not register with the an existing email', async () => {
+  const name = 'awesome';
+  const email = 'awesome@example.com';
+
   const user = new User({
-    name: 'awesome',
-    email: 'awesome@example.com',
+    name,
+    email,
+    password: '123',
   });
   await user.save();
 
@@ -20,7 +24,7 @@ it('should not register with the an existing email', async () => {
       RegisterEmail(input: {
         clientMutationId: "abc"
         name: "Awesome"
-        email: "awesome@example.com"
+        email: "${email}"
         password: "awesome"
       }) {
         clientMutationId

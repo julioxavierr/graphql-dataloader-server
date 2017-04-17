@@ -52,7 +52,8 @@ export default class User {
   static async loadUsers(viewer, args) {
     const where = args.search ? { name: { $regex: new RegExp(`^${args.search}`, 'ig') } } : {};
     const users = UserModel
-      .find(where, { _id: 1 });
+      .find(where, { _id: 1 })
+      .sort({ createdAt: -1 });
 
     return ConnectionFromMongoCursor.connectionFromMongoCursor(viewer, users, args, User.load);
   }

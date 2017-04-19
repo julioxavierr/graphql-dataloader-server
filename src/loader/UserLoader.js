@@ -49,6 +49,10 @@ export default class User {
     return User.viewerCanSee(viewer, data) ? new User(data, viewer) : null;
   }
 
+  static clearCache(id) {
+    return User.userLoader.clear(id.toString());
+  }
+
   static async loadUsers(viewer, args) {
     const where = args.search ? { name: { $regex: new RegExp(`^${args.search}`, 'ig') } } : {};
     const users = UserModel

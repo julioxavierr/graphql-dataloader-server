@@ -18,10 +18,6 @@ export default class User {
   email: string;
   active: boolean;
 
-  static userLoader = new DataLoader(
-    ids => Promise.all(ids.map(id => UserModel.findOne({ _id: id }))),
-  );
-
   constructor(data: UserType, viewer) {
     this.id = data.id;
     this._id = data._id;
@@ -34,31 +30,35 @@ export default class User {
     }
   }
 
+  static getLoader = () => new DataLoader(
+    ids => Promise.all(ids.map(id => UserModel.findOne({ _id: id })))
+  );
+
   static viewerCanSee(viewer, data) {
     // Anyone can se another user
     return true;
   }
 
-  static async load(viewer, id) {
+  static async load({ user: viewer, dataloaders }, id) {
     if (!id) return null;
 
-    const data = await User.userLoader.load(id);
+    const data = await dataloaders.UserLoader.load(id);
 
     if (!data) return null;
 
     return User.viewerCanSee(viewer, data) ? new User(data, viewer) : null;
   }
 
-  static clearCache(id) {
-    return User.userLoader.clear(id.toString());
+  static clearCache({ dataloaders }, id) {
+    return dataloaders.UserLoader.clear(id.toString());
   }
 
-  static async loadUsers(viewer, args) {
+  static async loadUsers(context, args) {
     const where = args.search ? { name: { $regex: new RegExp(`^${args.search}`, 'ig') } } : {};
     const users = UserModel
       .find(where, { _id: 1 })
       .sort({ createdAt: -1 });
 
-    return ConnectionFromMongoCursor.connectionFromMongoCursor(viewer, users, args, User.load);
+    return ConnectionFromMongoCursor.connectionFromMongoCursor(context, users, args, User.load);
   }
 }

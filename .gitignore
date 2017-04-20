@@ -2,6 +2,7 @@
 *.sublime-project
 *.sublime-workspace
 .idea/
+.vscode/
 
 lib-cov
 *.seed

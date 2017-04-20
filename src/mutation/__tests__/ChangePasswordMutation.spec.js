@@ -4,7 +4,10 @@ import {
   User,
 } from '../../model';
 import { generateToken } from '../../auth';
-import { setupTest } from '../../../test/helper';
+import {
+  getContext,
+  setupTest,
+} from '../../../test/helper';
 
 beforeEach(async () => await setupTest());
 
@@ -23,7 +26,7 @@ it('should not change password of non authorized user', async () => {
   `;
 
   const rootValue = {};
-  const context = {};
+  const context = getContext();
 
   const result = await graphql(schema, query, rootValue, context);
   const { errors } = result;
@@ -54,7 +57,7 @@ it('should not change password if oldPassword is invalid', async () => {
   `;
 
   const rootValue = {};
-  const context = { user };
+  const context = getContext(user);
 
   const result = await graphql(schema, query, rootValue, context);
   const { ChangePassword } = result.data;
@@ -86,7 +89,7 @@ it('should change password if oldPassword is correct', async () => {
   `;
 
   const rootValue = {};
-  const context = { user };
+  const context = getContext(user);
 
   const result = await graphql(schema, query, rootValue, context);
   const { ChangePassword } = result.data;

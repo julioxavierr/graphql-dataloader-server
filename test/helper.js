@@ -1,6 +1,8 @@
 // @flow
 import mongoose from 'mongoose';
 
+import * as loaders from '../src/loader';
+
 const { ObjectId } = mongoose.Types;
 
 process.env.NODE_ENV = 'test';
@@ -57,6 +59,19 @@ function clearDatabase() {
 
     resolve();
   });
+}
+
+export function getContext(user) {
+  const dataloaders = Object.keys(loaders).reduce((dataloaders, loaderKey) => ({
+    ...dataloaders,
+    [loaderKey]: loaders[loaderKey].getLoader(),
+  }), {});
+
+  return {
+    user,
+    req: {},
+    dataloaders,
+  };
 }
 
 export async function setupTest() {

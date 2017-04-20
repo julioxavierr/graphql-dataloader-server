@@ -14,7 +14,7 @@ import {
 import { NodeInterface } from '../interface/NodeInterface';
 
 import UserType from './UserType';
-import UserLoader from '../loader/UserLoader';
+import { UserLoader } from '../loader';
 import UserConnection from '../connection/UserConnection';
 
 export default new GraphQLObjectType({
@@ -24,7 +24,7 @@ export default new GraphQLObjectType({
     id: globalIdField('Viewer'),
     me: {
       type: UserType,
-      resolve: (root, args, { user }) => UserLoader.load(user, user._id),
+      resolve: (root, args, context) => UserLoader.load(context, context.user._id),
     },
     user: {
       type: UserType,
@@ -33,9 +33,9 @@ export default new GraphQLObjectType({
           type: new GraphQLNonNull(GraphQLID),
         },
       },
-      resolve: (obj, args, { user }) => {
+      resolve: (obj, args, context) => {
         const { id } = fromGlobalId(args.id);
-        return UserLoader.load(user, id);
+        return UserLoader.load(context, id);
       },
     },
     users: {
@@ -46,7 +46,7 @@ export default new GraphQLObjectType({
           type: GraphQLString,
         },
       },
-      resolve: (obj, args, { user }) => UserLoader.loadUsers(user, args),
+      resolve: (obj, args, context) => UserLoader.loadUsers(context, args),
     },
   }),
   interfaces: () => [NodeInterface],

@@ -39,7 +39,7 @@ export default class ConnectionFromMongoCursor {
    * object for use in GraphQL. It uses array offsets as pagination, so pagiantion
    * will work only if the data set is satic.
    */
-  static async connectionFromMongoCursor(viewer, inMongoCursor, args = {}, loader) {
+  static async connectionFromMongoCursor(ctx, inMongoCursor, args = {}, loader) {
     const mongodbCursor = inMongoCursor;
     const { after, before } = args;
     let { first, last } = args;
@@ -82,7 +82,7 @@ export default class ConnectionFromMongoCursor {
 
     const edges = slice.map((value, index) => ({
       cursor: ConnectionFromMongoCursor.offsetToCursor(startOffset + index),
-      node: loader(viewer, value._id),
+      node: loader(ctx, value._id),
     }));
 
     const firstEdge = edges[0];

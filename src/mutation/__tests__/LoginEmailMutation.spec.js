@@ -4,7 +4,10 @@ import {
   User,
 } from '../../model';
 import { generateToken } from '../../auth';
-import { setupTest } from '../../../test/helper';
+import {
+  getContext,
+  setupTest,
+} from '../../../test/helper';
 
 beforeEach(async () => await setupTest());
 
@@ -24,7 +27,7 @@ it('should not login if email is not in the database', async () => {
   `;
 
   const rootValue = {};
-  const context = {};
+  const context = getContext();
 
   const result = await graphql(schema, query, rootValue, context);
   const { LoginEmail } = result.data;
@@ -57,7 +60,7 @@ it('should not login with wrong email', async () => {
   `;
 
   const rootValue = {};
-  const context = {};
+  const context = getContext();
 
   const result = await graphql(schema, query, rootValue, context);
   const { LoginEmail } = result.data;
@@ -92,7 +95,7 @@ it('should generate token when email and password is correct', async () => {
   `;
 
   const rootValue = {};
-  const context = {};
+  const context = getContext();
 
   const result = await graphql(schema, query, rootValue, context);
   const { LoginEmail } = result.data;

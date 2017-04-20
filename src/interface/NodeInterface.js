@@ -2,10 +2,9 @@
 
 import { nodeDefinitions, fromGlobalId } from 'graphql-relay';
 
-import ViewerLoader from '../loader/ViewerLoader';
-import ViewerType from '../type/ViewerType';
+import { UserLoader, ViewerLoader } from '../loader';
 
-import UserLoader from '../loader/UserLoader';
+import ViewerType from '../type/ViewerType';
 import UserType from '../type/UserType';
 
 const {
@@ -13,12 +12,12 @@ const {
   nodeInterface,
 } = nodeDefinitions(
   // A method that maps from a global id to an object
-  async (globalId, { user }) => {
+  async (globalId, ctx) => {
     const { id, type } = fromGlobalId(globalId);
 
     // console.log('id, type: ', type, id, globalId);
     if (type === 'User') {
-      return await UserLoader.load(user, id);
+      return await UserLoader.load(ctx, id);
     }
     if (type === 'Viewer') {
       return await ViewerLoader.load(id);

@@ -4,7 +4,10 @@ import {
   User,
 } from '../../model';
 import { generateToken } from '../../auth';
-import { setupTest } from '../../../test/helper';
+import {
+  getContext,
+  setupTest,
+} from '../../../test/helper';
 
 beforeEach(async () => await setupTest());
 
@@ -35,7 +38,7 @@ it('should not register with the an existing email', async () => {
   `;
 
   const rootValue = {};
-  const context = {};
+  const context = getContext();
 
   const result = await graphql(schema, query, rootValue, context);
   const { RegisterEmail } = result.data;
@@ -63,7 +66,7 @@ it('should create a new user with parameters are valid', async () => {
   `;
 
   const rootValue = {};
-  const context = {};
+  const context = getContext();
 
   const result = await graphql(schema, query, rootValue, context);
   const { RegisterEmail } = result.data;

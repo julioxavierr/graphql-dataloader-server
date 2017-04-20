@@ -7,7 +7,7 @@ import {
 } from 'graphql-relay';
 
 import UserType from '../type/UserType';
-import UserLoader from '../loader/UserLoader';
+import { UserLoader } from '../loader';
 
 export default mutationWithClientMutationId({
   name: 'ChangePassword',
@@ -47,7 +47,7 @@ export default mutationWithClientMutationId({
     },
     me: {
       type: UserType,
-      resolve: (obj, args, { user }) => UserLoader.load(user, user.id),
+      resolve: (obj, args, ctx) => UserLoader.load(ctx, user.id),
     },
   },
 });

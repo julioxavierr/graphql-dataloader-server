@@ -3,7 +3,10 @@ import { schema } from '../../schema';
 import {
   User,
 } from '../../model';
-import { setupTest } from '../../../test/helper';
+import {
+  getContext,
+  setupTest,
+} from '../../../test/helper';
 
 beforeEach(async () => await setupTest());
 
@@ -40,7 +43,7 @@ it('should not show email of other users', async () => {
   `;
 
   const rootValue = {};
-  const context = { user };
+  const context = getContext(user);
 
   const result = await graphql(schema, query, rootValue, context);
   const { edges } = result.data.viewer.users;

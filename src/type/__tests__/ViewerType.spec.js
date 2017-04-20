@@ -4,7 +4,10 @@ import { schema } from '../../schema';
 import {
   User,
 } from '../../model';
-import { setupTest } from '../../../test/helper';
+import {
+  getContext,
+  setupTest,
+} from '../../../test/helper';
 
 beforeEach(async () => await setupTest());
 
@@ -30,7 +33,7 @@ it('should get user by id', async () => {
   `;
 
   const rootValue = {};
-  const context = { };
+  const context = getContext();
 
   const result = await graphql(schema, query, rootValue, context);
   const { viewer } = result.data;

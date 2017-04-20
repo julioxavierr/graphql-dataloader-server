@@ -18,4 +18,7 @@ export default class Viewer {
 
     return new Viewer(data);
   }
+
+  // There is no need for a DataLoader instance here.
+  static getLoader = () => Viewer;
 }

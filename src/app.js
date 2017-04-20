@@ -11,7 +11,7 @@ import logger from 'koa-logger';
 import { schema } from './schema';
 import { jwtSecret } from './config';
 import { getUser } from './auth';
-import * as dataLoaders from './loader';
+import * as loaders from './loader';
 
 const app = new Koa();
 
@@ -21,11 +21,10 @@ const graphqlSettingsPerReq = async (req) => {
 
   const { user } = await getUser(req.header.authorization);
 
-  const generatedDataLoaders = {};
-
-  Object.keys(dataLoaders).forEach(item => {
-    generatedDataLoaders[item] = dataLoaders[item].getLoader()
-  });
+  const dataloaders = Object.keys(loaders).reduce((dataloaders, loaderKey) => ({
+    ...dataloaders,
+    [loaderKey]: loaders[loaderKey].getLoader(),
+  }), {});
 
   return {
     graphiql: process.env.NODE_ENV !== 'production',
@@ -33,7 +32,7 @@ const graphqlSettingsPerReq = async (req) => {
     context: {
       user,
       req,
-      dataLoaders : generatedDataLoaders,
+      dataloaders,
     },
     formatError: (error) => {
       console.log(error.message);

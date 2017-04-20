@@ -12,12 +12,12 @@ const {
   nodeInterface,
 } = nodeDefinitions(
   // A method that maps from a global id to an object
-  async (globalId, ctx) => {
+  async (globalId, context) => {
     const { id, type } = fromGlobalId(globalId);
 
     // console.log('id, type: ', type, id, globalId);
     if (type === 'User') {
-      return await UserLoader.load(ctx, id);
+      return await UserLoader.load(context, id);
     }
     if (type === 'Viewer') {
       return await ViewerLoader.load(id);

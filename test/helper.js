@@ -1,7 +1,7 @@
 // @flow
 import mongoose from 'mongoose';
 
-import * as dataLoaders from '../src/loader'
+import * as loaders from '../src/loader';
 
 const { ObjectId } = mongoose.Types;
 
@@ -62,16 +62,15 @@ function clearDatabase() {
 }
 
 export function getContext(user) {
-  const generatedDataLoaders = {};
-
-  Object.keys(dataLoaders).forEach(item => {
-    generatedDataLoaders[item] = dataLoaders[item].getLoader()
-  });
+  const dataloaders = Object.keys(loaders).reduce((dataloaders, loaderKey) => ({
+    ...dataloaders,
+    [loaderKey]: loaders[loaderKey].getLoader(),
+  }), {});
 
   return {
     user,
     req: {},
-    dataLoaders: generatedDataLoaders,
+    dataloaders,
   };
 }
 

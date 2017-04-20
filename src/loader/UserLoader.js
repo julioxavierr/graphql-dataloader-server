@@ -39,26 +39,26 @@ export default class User {
     return true;
   }
 
-  static async load({ user: viewer, dataLoaders }, id) {
+  static async load({ user: viewer, dataloaders }, id) {
     if (!id) return null;
 
-    const data = await dataLoaders.UserLoader.load(id);
+    const data = await dataloaders.UserLoader.load(id);
 
     if (!data) return null;
 
     return User.viewerCanSee(viewer, data) ? new User(data, viewer) : null;
   }
 
-  static clearCache({ dataLoaders }, id) {
-    return dataLoaders.UserLoader.clear(id.toString());
+  static clearCache({ dataloaders }, id) {
+    return dataloaders.UserLoader.clear(id.toString());
   }
 
-  static async loadUsers(ctx, args) {
+  static async loadUsers(context, args) {
     const where = args.search ? { name: { $regex: new RegExp(`^${args.search}`, 'ig') } } : {};
     const users = UserModel
       .find(where, { _id: 1 })
       .sort({ createdAt: -1 });
 
-    return ConnectionFromMongoCursor.connectionFromMongoCursor(ctx, users, args, User.load);
+    return ConnectionFromMongoCursor.connectionFromMongoCursor(context, users, args, User.load);
   }
 }

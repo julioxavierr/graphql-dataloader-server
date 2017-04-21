@@ -1,2 +1,7 @@
+[ignore]
+
+[include]
+
 [libs]
-interfaces/
+
+[options]

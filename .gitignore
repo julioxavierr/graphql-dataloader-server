@@ -27,3 +27,4 @@ bundle.js
 dist
 coverage
 .nyc_output
+flow-coverage

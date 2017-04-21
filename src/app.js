@@ -7,6 +7,7 @@ import cors from 'koa-cors';
 import graphqlHttp from 'koa-graphql';
 import convert from 'koa-convert';
 import logger from 'koa-logger';
+import { print } from 'graphql/language';
 
 import { schema } from './schema';
 import { jwtSecret } from './config';
@@ -33,6 +34,11 @@ const graphqlSettingsPerReq = async (req) => {
       user,
       req,
       dataloaders,
+    },
+    extensions: ({ document, variables, operationName, result }) => {
+      console.log(print(document));
+      console.log(variables);
+      console.log(result);
     },
     formatError: (error) => {
       console.log(error.message);

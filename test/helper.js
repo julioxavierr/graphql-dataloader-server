@@ -61,14 +61,14 @@ function clearDatabase() {
   });
 }
 
-export function getContext(user) {
+export function getContext(context) {
   const dataloaders = Object.keys(loaders).reduce((dataloaders, loaderKey) => ({
     ...dataloaders,
     [loaderKey]: loaders[loaderKey].getLoader(),
   }), {});
 
   return {
-    user,
+    ...context,
     req: {},
     dataloaders,
   };

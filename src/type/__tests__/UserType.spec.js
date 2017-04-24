@@ -30,7 +30,7 @@ it('should not show email of other users', async () => {
       viewer {
         users(first: 2) {
           edges {
-            node {  
+            node {
               _id
               name
               email
@@ -43,7 +43,7 @@ it('should not show email of other users', async () => {
   `;
 
   const rootValue = {};
-  const context = getContext(user);
+  const context = getContext({ user });
 
   const result = await graphql(schema, query, rootValue, context);
   const { edges } = result.data.viewer.users;

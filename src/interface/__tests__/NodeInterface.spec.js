@@ -27,12 +27,12 @@ it('should load Viewer', async () => {
              name
           }
         }
-      }     
+      }
     }
   `;
 
   const rootValue = {};
-  const context = getContext(user);
+  const context = getContext({ user });
 
   const result = await graphql(schema, query, rootValue, context);
   const { node } = result.data;
@@ -54,7 +54,7 @@ it('should load User', async () => {
         ... on User {
           name
         }
-      }     
+      }
     }
   `;
 

@@ -21,7 +21,7 @@ it('should not change password of non authorized user', async () => {
       }) {
         clientMutationId
         error
-      }     
+      }
     }
   `;
 
@@ -52,12 +52,12 @@ it('should not change password if oldPassword is invalid', async () => {
       }) {
         clientMutationId
         error
-      }     
+      }
     }
   `;
 
   const rootValue = {};
-  const context = getContext(user);
+  const context = getContext({ user });
 
   const result = await graphql(schema, query, rootValue, context);
   const { ChangePassword } = result.data;
@@ -84,12 +84,12 @@ it('should change password if oldPassword is correct', async () => {
       }) {
         clientMutationId
         error
-      }     
+      }
     }
   `;
 
   const rootValue = {};
-  const context = getContext(user);
+  const context = getContext({ user });
 
   const result = await graphql(schema, query, rootValue, context);
   const { ChangePassword } = result.data;

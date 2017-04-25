@@ -2,6 +2,7 @@
 import DataLoader from 'dataloader';
 import { User as UserModel } from '../model';
 import ConnectionFromMongoCursor from '../connection/ConnectionFromMongoCursor';
+import mongooseLoader from './mongooseLoader';
 
 type UserType = {
   id: string,
@@ -30,9 +31,7 @@ export default class User {
     }
   }
 
-  static getLoader = () => new DataLoader(
-    ids => Promise.all(ids.map(id => UserModel.findOne({ _id: id })))
-  );
+  static getLoader = () => new DataLoader(ids => mongooseLoader(UserModel, ids));
 
   static viewerCanSee(viewer, data) {
     // Anyone can se another user

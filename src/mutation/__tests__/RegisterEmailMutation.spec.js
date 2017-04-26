@@ -22,6 +22,7 @@ it('should not register with the an existing email', async () => {
   });
   await user.save();
 
+  //language=GraphQL
   const query = `
     mutation M {
       RegisterEmail(input: {
@@ -50,6 +51,7 @@ it('should not register with the an existing email', async () => {
 it('should create a new user with parameters are valid', async () => {
   const email = 'awesome@example.com';
 
+  //language=GraphQL
   const query = `
     mutation M {
       RegisterEmail(input: {

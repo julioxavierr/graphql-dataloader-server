@@ -12,6 +12,7 @@ import {
 beforeEach(async () => await setupTest());
 
 it('should not change password of non authorized user', async () => {
+  //language=GraphQL
   const query = `
     mutation M {
       ChangePassword(input: {
@@ -43,6 +44,7 @@ it('should not change password if oldPassword is invalid', async () => {
   });
   await user.save();
 
+  //language=GraphQL
   const query = `
     mutation M {
       ChangePassword(input: {
@@ -75,6 +77,7 @@ it('should change password if oldPassword is correct', async () => {
   });
   await user.save();
 
+  //language=GraphQL
   const query = `
     mutation M {
       ChangePassword(input: {

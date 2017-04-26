@@ -12,6 +12,7 @@ import {
 beforeEach(async () => await setupTest());
 
 it('should not login if email is not in the database', async () => {
+  //language=GraphQL
   const query = `
     mutation M {
       LoginEmail(input: {
@@ -45,6 +46,7 @@ it('should not login with wrong email', async () => {
   });
   await user.save();
 
+  //language=GraphQL
   const query = `
     mutation M {
       LoginEmail(input: {
@@ -80,6 +82,7 @@ it('should generate token when email and password is correct', async () => {
   });
   await user.save();
 
+  //language=GraphQL
   const query = `
     mutation M {
       LoginEmail(input: {

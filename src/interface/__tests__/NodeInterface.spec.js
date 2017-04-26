@@ -19,6 +19,7 @@ it('should load Viewer', async () => {
   });
   await user.save();
 
+  //language=GraphQL
   const query = `
     query Q {
       node(id: "${toGlobalId('Viewer', user._id)}") {
@@ -48,6 +49,7 @@ it('should load User', async () => {
   });
   await user.save();
 
+  //language=GraphQL
   const query = `
     query Q {
       node(id: "${toGlobalId('User', user._id)}") {

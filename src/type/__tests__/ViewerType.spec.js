@@ -19,6 +19,7 @@ it('should get user by id', async () => {
   });
   await user.save();
 
+  //language=GraphQL
   const query = `
     query Q {
       viewer {

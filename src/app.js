@@ -61,13 +61,13 @@ const graphqlSettingsPerReq = async (req) => {
 const graphqlServer = convert(graphqlHttp(graphqlSettingsPerReq));
 
 // graphql batch query route
-router.all('/graphql/batch', bodyParser(), graphqlBatchHttpWrapper(graphqlServer))
+router.all('/graphql/batch', bodyParser(), graphqlBatchHttpWrapper(graphqlServer));
 
 // graphql standard route
-router.all('/graphql', graphqlServer)
+router.all('/graphql', graphqlServer);
 
 app.use(logger());
 app.use(convert(cors()));
-app.use(router.routes()).use(router.allowedMethods())
+app.use(router.routes()).use(router.allowedMethods());
 
 export default app;

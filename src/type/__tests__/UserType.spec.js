@@ -25,6 +25,7 @@ it('should not show email of other users', async () => {
   });
   await user1.save();
 
+  //language=GraphQL
   const query = `
     query Q {
       viewer {

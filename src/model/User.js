@@ -2,7 +2,7 @@
 
 
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt-as-promised';
+import bcrypt from 'bcryptjs';
 
 const Schema = new mongoose.Schema({
   name: {
@@ -34,27 +34,18 @@ Schema
   .pre('save', function (next) {
     // Hash the password
     if (this.isModified('password')) {
-      this.encryptPassword(this.password)
-        .then((hash) => {
-          this.password = hash;
-          next();
-        })
-        .catch(err => next(err));
-    } else {
-      return next();
+      this.password = this.encryptPassword(this.password);
     }
+
+    return next();
   });
 
 Schema.methods = {
-  async authenticate(plainTextPassword) {
-    try {
-      return await bcrypt.compare(plainTextPassword, this.password);
-    } catch (err) {
-      return false;
-    }
+  authenticate(plainTextPassword) {
+    return bcrypt.compareSync(plainTextPassword, this.password);
   },
   encryptPassword(password) {
-    return bcrypt.hash(password, 8);
+    return bcrypt.hashSync(password, 8);
   },
 };
 

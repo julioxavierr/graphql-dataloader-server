@@ -26,7 +26,7 @@ export default mutationWithClientMutationId({
       };
     }
 
-    const correctPassword = await user.authenticate(password);
+    const correctPassword = user.authenticate(password);
 
     if (!correctPassword) {
       return {

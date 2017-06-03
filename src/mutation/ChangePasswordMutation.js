@@ -25,7 +25,7 @@ export default mutationWithClientMutationId({
       throw new Error('invalid user');
     }
 
-    const correctPassword = await user.authenticate(oldPassword);
+    const correctPassword = user.authenticate(oldPassword);
 
     if (!correctPassword) {
       return {

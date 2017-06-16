@@ -1,7 +1,7 @@
 // @flow
 import DataLoader from 'dataloader';
 import { User as UserModel } from '../model';
-import ConnectionFromMongoCursor from '../connection/ConnectionFromMongoCursor';
+import connectionFromMongoCursor from './ConnectionFromMongoCursor';
 import mongooseLoader from './mongooseLoader';
 
 type UserType = {
@@ -58,6 +58,11 @@ export default class User {
       .find(where, { _id: 1 })
       .sort({ createdAt: -1 });
 
-    return ConnectionFromMongoCursor.connectionFromMongoCursor(context, users, args, User.load);
+    return connectionFromMongoCursor({
+      cursor: users,
+      context,
+      args,
+      loader: User.load,
+    });
   }
 }

@@ -4,6 +4,9 @@ import { User as UserModel } from '../model';
 import connectionFromMongoCursor from './ConnectionFromMongoCursor';
 import mongooseLoader from './mongooseLoader';
 
+import type { ConnectionArguments } from 'graphql-relay';
+import type { GraphQLContext } from '../TypeDefinition';
+
 type UserType = {
   id: string,
   _id: string,
@@ -19,13 +22,13 @@ export default class User {
   email: string;
   active: boolean;
 
-  constructor(data: UserType, viewer) {
+  constructor(data: UserType, { user }: GraphQLContext) {
     this.id = data.id;
     this._id = data._id;
     this.name = data.name;
 
     // you can only see your own email, and your active status
-    if (viewer && viewer._id.equals(data._id)) {
+    if (user && user._id.equals(data._id)) {
       this.email = data.email;
       this.active = data.active;
     }
@@ -39,21 +42,21 @@ const viewerCanSee = (viewer, data) => {
   return true;
 };
 
-export const load = async ({ user: viewer, dataloaders }, id) => {
+export const load = async (context: GraphQLContext, id: string): Promise<?User> => {
   if (!id) return null;
 
-  const data = await dataloaders.UserLoader.load(id);
+  const data = await context.dataloaders.UserLoader.load(id);
 
   if (!data) return null;
 
-  return viewerCanSee(viewer, data) ? new User(data, viewer) : null;
+  return viewerCanSee(context, data) ? new User(data, context) : null;
 };
 
-export const clearCache = ({ dataloaders }, id) => {
+export const clearCache = ({ dataloaders }: GraphQLContext, id: string) => {
   return dataloaders.UserLoader.clear(id.toString());
 };
 
-export const loadUsers = async (context, args) => {
+export const loadUsers = async (context: GraphQLContext, args: ConnectionArguments) => {
   const where = args.search ? { name: { $regex: new RegExp(`^${args.search}`, 'ig') } } : {};
   const users = UserModel
     .find(where, { _id: 1 })

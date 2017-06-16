@@ -1,5 +1,3 @@
-// @flow
-
 import 'reify/repl';
 import 'isomorphic-fetch';
 import 'babel-polyfill';

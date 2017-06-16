@@ -30,39 +30,39 @@ export default class User {
       this.active = data.active;
     }
   }
-
-  static getLoader = () => new DataLoader(ids => mongooseLoader(UserModel, ids));
-
-  static viewerCanSee(viewer, data) {
-    // Anyone can se another user
-    return true;
-  }
-
-  static async load({ user: viewer, dataloaders }, id) {
-    if (!id) return null;
-
-    const data = await dataloaders.UserLoader.load(id);
-
-    if (!data) return null;
-
-    return User.viewerCanSee(viewer, data) ? new User(data, viewer) : null;
-  }
-
-  static clearCache({ dataloaders }, id) {
-    return dataloaders.UserLoader.clear(id.toString());
-  }
-
-  static async loadUsers(context, args) {
-    const where = args.search ? { name: { $regex: new RegExp(`^${args.search}`, 'ig') } } : {};
-    const users = UserModel
-      .find(where, { _id: 1 })
-      .sort({ createdAt: -1 });
-
-    return connectionFromMongoCursor({
-      cursor: users,
-      context,
-      args,
-      loader: User.load,
-    });
-  }
 }
+
+export const getLoader = () => new DataLoader(ids => mongooseLoader(UserModel, ids));
+
+const viewerCanSee = (viewer, data) => {
+  // Anyone can se another user
+  return true;
+};
+
+export const load = async ({ user: viewer, dataloaders }, id) => {
+  if (!id) return null;
+
+  const data = await dataloaders.UserLoader.load(id);
+
+  if (!data) return null;
+
+  return viewerCanSee(viewer, data) ? new User(data, viewer) : null;
+};
+
+export const clearCache = ({ dataloaders }, id) => {
+  return dataloaders.UserLoader.clear(id.toString());
+};
+
+export const loadUsers = async (context, args) => {
+  const where = args.search ? { name: { $regex: new RegExp(`^${args.search}`, 'ig') } } : {};
+  const users = UserModel
+    .find(where, { _id: 1 })
+    .sort({ createdAt: -1 });
+
+  return connectionFromMongoCursor({
+    cursor: users,
+    context,
+    args,
+    loader: load,
+  });
+};

@@ -10,15 +10,15 @@ export default class Viewer {
   constructor(data: ViewerType) {
     this.id = data.id;
   }
+};
 
-  static async load(userId) {
-    const data = {
-      id: userId,
-    };
+export const load = (userId) => {
+  const data = {
+    id: userId,
+  };
 
-    return new Viewer(data);
-  }
+  return new Viewer(data);
+};
 
-  // There is no need for a DataLoader instance here.
-  static getLoader = () => Viewer;
-}
+// There is no need for a DataLoader instance here.
+export const getLoader = () => Viewer;

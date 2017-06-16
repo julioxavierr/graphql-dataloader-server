@@ -12,7 +12,7 @@ export default class Viewer {
   }
 };
 
-export const load = (userId) => {
+export const load = (userId: string): Viewer => {
   const data = {
     id: userId,
   };

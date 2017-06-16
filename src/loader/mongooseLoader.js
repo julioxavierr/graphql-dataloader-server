@@ -17,9 +17,13 @@ function normalizeResults(keys, indexField, cacheKeyFn = key => key) {
   };
 }
 
-export const cacheKeyFn = key => key.toString();
+export const cacheKeyFn = (key: string) => key.toString();
 
-export default async (model, ids: Array<string> ) => {
+//TODO add types to mongoose
+type MongooseModel = {
+  find: (criteria: Object) => any,
+};
+export default async (model: MongooseModel, ids: Array<string> ) => {
   const results = await model.find( {_id : { $in : ids }});
   return normalizeResults(ids, '_id', cacheKeyFn)(results);
 };

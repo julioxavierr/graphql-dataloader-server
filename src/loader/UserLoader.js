@@ -48,13 +48,12 @@ const load = async (context: GraphQLContext, id: string): Promise<?User> => {
     return null;
   }
 
-let data;
-try {
-  data = await context.dataloaders.UserLoader.load(id);
-} catch (err) {
-  return null;
-}
-
+  let data;
+  try {
+    data = await context.dataloaders.UserLoader.load(id);
+  } catch (err) {
+    return null;
+  }
   return viewerCanSee(context, data) ? new User(data, context) : null;
 }
 

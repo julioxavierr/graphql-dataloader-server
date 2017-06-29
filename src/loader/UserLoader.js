@@ -42,19 +42,20 @@ const viewerCanSee = (viewer, data) => {
   return true;
 };
 
-static async load({ user: viewer, dataloaders }: GraphQLContext, id) {
+
+const load = async (context: GraphQLContext, id: string): Promise<?User> => {
   if (!id) {
     return null;
   }
 
-  let data;
-  try {
-    data = await dataloaders.UserLoader.load(id);
-  } catch (err) {
-    return null;
-  }
+let data;
+try {
+  data = await context.dataloaders.UserLoader.load(id);
+} catch (err) {
+  return null;
+}
 
-  return User.viewerCanSee(viewer, data) ? new User(data, viewer) : null;
+  return viewerCanSee(context, data) ? new User(data, context) : null;
 }
 
 export const clearCache = ({ dataloaders }: GraphQLContext, id: string) => {

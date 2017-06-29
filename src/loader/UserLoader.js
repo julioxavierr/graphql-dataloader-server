@@ -55,7 +55,7 @@ const load = async (context: GraphQLContext, id: string): Promise<?User> => {
     return null;
   }
   return viewerCanSee(context, data) ? new User(data, context) : null;
-}
+};
 
 export const clearCache = ({ dataloaders }: GraphQLContext, id: string) => {
   return dataloaders.UserLoader.clear(id.toString());

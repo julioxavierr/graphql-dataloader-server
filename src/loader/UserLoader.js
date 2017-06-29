@@ -42,13 +42,18 @@ const viewerCanSee = (viewer, data) => {
   return true;
 };
 
-export const load = async (context: GraphQLContext, id: string): Promise<?User> => {
-  if (!id) return null;
 
-  const data = await context.dataloaders.UserLoader.load(id);
+const load = async (context: GraphQLContext, id: string): Promise<?User> => {
+  if (!id) {
+    return null;
+  }
 
-  if (!data) return null;
-
+  let data;
+  try {
+    data = await context.dataloaders.UserLoader.load(id);
+  } catch (err) {
+    return null;
+  }
   return viewerCanSee(context, data) ? new User(data, context) : null;
 };
 

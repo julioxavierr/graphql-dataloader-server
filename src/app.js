@@ -5,7 +5,7 @@ import 'isomorphic-fetch';
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import convert from 'koa-convert';
-import cors from 'koa-cors';
+import cors from 'kcors';
 import graphqlHttp from 'koa-graphql';
 import graphqlBatchHttpWrapper from 'koa-graphql-batch';
 import logger from 'koa-logger';
@@ -67,7 +67,7 @@ router.all('/graphql/batch', bodyParser(), graphqlBatchHttpWrapper(graphqlServer
 router.all('/graphql', graphqlServer);
 
 app.use(logger());
-app.use(convert(cors()));
+app.use(cors());
 app.use(router.routes()).use(router.allowedMethods());
 
 export default app;

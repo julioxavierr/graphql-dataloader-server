@@ -32,9 +32,12 @@
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-import": "^2.3.0",
     "flow-bin": "^0.48.0",
+    "husky": "^0.14.3",
     "jest": "20.0.4",
     "jest-cli": "20.0.4",
+    "lint-staged": "^4.0.2",
     "nodemon": "^1.10.2",
+    "prettier": "^1.5.3",
     "reify": "^0.11.23",
     "repl": "^0.1.3",
     "repl-promised": "^0.1.0",
@@ -63,11 +66,18 @@
     "type": "git",
     "url": "https://github.com/entria/graphql-dataloader-boilerplate"
   },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write --single-quote true --trailing-comma all --print-width 120",
+      "git add"
+    ]
+  },
   "scripts": {
     "build": "npm run clear && babel src --ignore *.spec.js --out-dir dist --copy-files",
     "clear": "rimraf ./dist",
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "lint": "eslint src/**",
+    "precommit": "lint-staged",
     "repl": "nodemon --config ./repl/nodemon.json ./repl.js --exec babel-node",
     "start": "node dist/index.js",
     "test": "jest --coverage --forceExit --runInBand",

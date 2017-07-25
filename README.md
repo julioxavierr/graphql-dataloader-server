@@ -42,6 +42,13 @@ brew install mongodb
 npm run watch
 ```
 
+#### Docker and docker-compose
+No needs for installing dependencies or running `mongod` in another terminal window
+
+```bash
+docker-compose build && docker-compose up
+``` 
+
 #### Production
 ```bash
 # first compile the code

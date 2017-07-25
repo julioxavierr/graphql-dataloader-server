@@ -3,6 +3,7 @@
 *.sublime-workspace
 .idea/
 .vscode/
+package-lock.json
 
 lib-cov
 *.seed

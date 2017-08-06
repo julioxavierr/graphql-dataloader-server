@@ -43,7 +43,7 @@ const viewerCanSee = (viewer, data) => {
 };
 
 
-const load = async (context: GraphQLContext, id: string): Promise<?User> => {
+export const load = async (context: GraphQLContext, id: string): Promise<?User> => {
   if (!id) {
     return null;
   }

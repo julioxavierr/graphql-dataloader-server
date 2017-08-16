@@ -6,9 +6,11 @@ const { ObjectId } = mongoose.Types;
 
 process.env.NODE_ENV = 'test';
 
+const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/test';
+
 const config = {
   db: {
-    test: 'mongodb://localhost/test',
+    test: MONGO_URL,
   },
   connection: null,
 };
@@ -18,8 +20,6 @@ function connect() {
     if (config.connection) {
       return resolve();
     }
-
-    const mongoUri = 'mongodb://localhost/test';
 
     mongoose.Promise = Promise;
 
@@ -31,7 +31,7 @@ function connect() {
       },
     };
 
-    mongoose.connect(mongoUri, options);
+    mongoose.connect(MONGO_URL, options);
 
     config.connection = mongoose.connection;
 
@@ -41,7 +41,7 @@ function connect() {
         if (e.message.code === 'ETIMEDOUT') {
           console.log(e);
 
-          mongoose.connect(mongoUri, options);
+          mongoose.connect(MONGO_URL, options);
         }
 
         console.log(e);

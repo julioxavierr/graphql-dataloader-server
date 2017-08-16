@@ -42,12 +42,27 @@ brew install mongodb
 npm run watch
 ```
 
+### Test
+```bash
+npm test
+```
+
+Or
+```bash
+npm run test:watch
+```
+
 #### Docker and docker-compose
 No needs for installing dependencies or running `mongod` in another terminal window
 
 ```bash
 docker-compose build && docker-compose up
-``` 
+```
+
+Test
+```bash
+docker-compose -f docker-compose.test.yml build && docker-compose -f docker-compose.test.yml up
+```
 
 #### Production
 ```bash

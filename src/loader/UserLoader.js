@@ -13,7 +13,7 @@ type UserType = {
   name: string,
   email: string,
   active: boolean,
-}
+};
 
 export default class User {
   id: string;
@@ -37,11 +37,10 @@ export default class User {
 
 export const getLoader = () => new DataLoader(ids => mongooseLoader(UserModel, ids));
 
-const viewerCanSee = (viewer, data) => {
+const meCanSee = (me, data) => {
   // Anyone can se another user
   return true;
 };
-
 
 export const load = async (context: GraphQLContext, id: string): Promise<?User> => {
   if (!id) {
@@ -54,7 +53,7 @@ export const load = async (context: GraphQLContext, id: string): Promise<?User> 
   } catch (err) {
     return null;
   }
-  return viewerCanSee(context, data) ? new User(data, context) : null;
+  return meCanSee(context, data) ? new User(data, context) : null;
 };
 
 export const clearCache = ({ dataloaders }: GraphQLContext, id: string) => {
@@ -63,9 +62,7 @@ export const clearCache = ({ dataloaders }: GraphQLContext, id: string) => {
 
 export const loadUsers = async (context: GraphQLContext, args: ConnectionArguments) => {
   const where = args.search ? { name: { $regex: new RegExp(`^${args.search}`, 'ig') } } : {};
-  const users = UserModel
-    .find(where, { _id: 1 })
-    .sort({ createdAt: -1 });
+  const users = UserModel.find(where, { _id: 1 }).sort({ createdAt: -1 });
 
   return connectionFromMongoCursor({
     cursor: users,

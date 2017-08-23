@@ -1,9 +1,7 @@
 import mongoose from 'mongoose';
 import { graphql } from 'graphql';
 import { schema } from '../schema';
-import {
-  User,
-} from '../model';
+import { User } from '../model';
 import { setupTest } from '../../test/helper';
 
 import { getUser, generateToken } from '../auth';
@@ -35,17 +33,17 @@ describe('getUser', () => {
   });
 
   it('should return user from a valid token', async () => {
-    const viewer = new User({
+    const me = new User({
       name: 'user',
       email: 'user@example.com',
       password: '123',
     });
-    await viewer.save();
+    await me.save();
 
-    const token = generateToken(viewer);
+    const token = generateToken(me);
     const { user } = await getUser(token);
 
-    expect(user.name).toBe(viewer.name);
-    expect(user.email).toBe(viewer.email);
+    expect(user.name).toBe(me.name);
+    expect(user.email).toBe(me.email);
   });
 });

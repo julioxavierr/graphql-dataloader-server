@@ -52,13 +52,12 @@ type PageInfo {
 }
 
 # The root of all... queries
-type Query {
-  # Fetches an object given its ID
-  node(
-    # The ID of an object
-    id: ID!
-  ): Node
-  viewer: Viewer
+type Query implements Node {
+  # The ID of an object
+  id: ID!
+  me: User
+  user(id: ID!): User
+  users(after: String, first: Int, before: String, last: Int, search: String): UserConnection
 }
 
 input RegisterEmailInput {
@@ -101,13 +100,4 @@ type UserEdge {
 
   # A cursor for use in pagination
   cursor: String!
-}
-
-# ...
-type Viewer implements Node {
-  # The ID of an object
-  id: ID!
-  me: User
-  user(id: ID!): User
-  users(after: String, first: Int, before: String, last: Int, search: String): UserConnection
 }

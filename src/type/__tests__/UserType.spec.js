@@ -1,12 +1,7 @@
 import { graphql } from 'graphql';
 import { schema } from '../../schema';
-import {
-  User,
-} from '../../model';
-import {
-  getContext,
-  setupTest,
-} from '../../../test/helper';
+import { User } from '../../model';
+import { getContext, setupTest } from '../../../test/helper';
 
 beforeEach(async () => await setupTest());
 
@@ -28,15 +23,13 @@ it('should not show email of other users', async () => {
   //language=GraphQL
   const query = `
     query Q {
-      viewer {
-        users(first: 2) {
-          edges {
-            node {
-              _id
-              name
-              email
-              active
-            }
+      users(first: 2) {
+        edges {
+          node {
+            _id
+            name
+            email
+            active
           }
         }
       }
@@ -47,7 +40,7 @@ it('should not show email of other users', async () => {
   const context = getContext({ user });
 
   const result = await graphql(schema, query, rootValue, context);
-  const { edges } = result.data.viewer.users;
+  const { edges } = result.data.users;
 
   expect(edges[0].node.name).toBe(user1.name);
   expect(edges[0].node.email).toBe(null);

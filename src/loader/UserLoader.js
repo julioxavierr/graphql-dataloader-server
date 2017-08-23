@@ -37,8 +37,8 @@ export default class User {
 
 export const getLoader = () => new DataLoader(ids => mongooseLoader(UserModel, ids));
 
-const meCanSee = (me, data) => {
-  // Anyone can se another user
+const viewerCanSee = (viewer, data) => {
+  // Anyone can see another user
   return true;
 };
 
@@ -53,7 +53,7 @@ export const load = async (context: GraphQLContext, id: string): Promise<?User> 
   } catch (err) {
     return null;
   }
-  return meCanSee(context, data) ? new User(data, context) : null;
+  return viewerCanSee(context, data) ? new User(data, context) : null;
 };
 
 export const clearCache = ({ dataloaders }: GraphQLContext, id: string) => {

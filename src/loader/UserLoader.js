@@ -1,8 +1,8 @@
 // @flow
 import DataLoader from 'dataloader';
 import { User as UserModel } from '../model';
-import connectionFromMongoCursor from './ConnectionFromMongoCursor';
-import mongooseLoader from './mongooseLoader';
+import { connectionFromMongoCursor } from '@entria/graphql-mongoose-loader';
+import { mongooseLoader } from '@entria/graphql-mongoose-loader';
 
 import type { ConnectionArguments } from 'graphql-relay';
 import type { GraphQLContext } from '../TypeDefinition';

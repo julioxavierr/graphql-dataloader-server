@@ -59,7 +59,10 @@
     "collectCoverage": true,
     "moduleNameMapper": {
       "^mongoose$": "<rootDir>/node_modules/mongoose"
-    }
+    },
+    "setupFiles": [
+      "babel-polyfill"
+    ]
   },
   "license": "MIT",
   "main": "index.js",

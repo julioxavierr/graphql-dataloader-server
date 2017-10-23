@@ -12,6 +12,6 @@ export default function connectDatabase() {
       .on('close', () => console.log('Database connection closed.'))
       .once('open', () => resolve(mongoose.connections[0]));
 
-    mongoose.connect(databaseConfig);
+    mongoose.connect(databaseConfig, { useMongoClient: true });
   });
 }

@@ -1,6 +1,6 @@
 FROM node:8.0-alpine
 
-MAINTAINER Vítor Capretz <capretzvitor@gmail.com>
+MAINTAINER Entria <hello@entria.com.br>
 
 RUN mkdir -p /app
 WORKDIR /app

@@ -1,4 +1,4 @@
-FROM node:8.0-alpine
+FROM node:8
 
 MAINTAINER Entria <hello@entria.com.br>
 

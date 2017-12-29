@@ -37,7 +37,7 @@ export default class User {
 
 export const getLoader = () => new DataLoader(ids => mongooseLoader(UserModel, ids));
 
-const viewerCanSee = (viewer, data) => {
+const viewerCanSee = (context, data) => {
   // Anyone can see another user
   return true;
 };

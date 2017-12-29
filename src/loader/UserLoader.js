@@ -10,6 +10,7 @@ type UserType = {
   id: string,
   _id: string,
   name: string,
+  password: string,
   email: string,
   active: boolean,
 };

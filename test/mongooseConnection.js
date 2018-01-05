@@ -6,16 +6,14 @@ const mongoUri = 'mongodb://localhost/test';
 
 mongoose.Promise = Promise;
 mongoose.connect(mongoUri, {
-  server: {
-    auto_reconnect: true,
-    reconnectTries: Number.MAX_VALUE,
-    reconnectInterval: 1000,
-  },
+  auto_reconnect: true,
+  reconnectTries: Number.MAX_VALUE,
+  reconnectInterval: 1000,
 });
 
 export const connection = mongoose.connection;
 
-connection.on('error', (e) => {
+connection.on('error', e => {
   if (e.message.code === 'ETIMEDOUT') {
     console.log(e);
     mongoose.connect(mongoUri, opts);

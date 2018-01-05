@@ -24,29 +24,25 @@ function connect() {
     mongoose.Promise = Promise;
 
     const options = {
-      server: {
-        auto_reconnect: true,
-        reconnectTries: Number.MAX_VALUE,
-        reconnectInterval: 1000,
-      },
+      auto_reconnect: true,
+      reconnectTries: Number.MAX_VALUE,
+      reconnectInterval: 1000,
     };
 
     mongoose.connect(MONGO_URL, options);
 
     config.connection = mongoose.connection;
 
-    config.connection
-      .once('open', resolve)
-      .on('error', (e) => {
-        if (e.message.code === 'ETIMEDOUT') {
-          console.log(e);
-
-          mongoose.connect(MONGO_URL, options);
-        }
-
+    config.connection.once('open', resolve).on('error', e => {
+      if (e.message.code === 'ETIMEDOUT') {
         console.log(e);
-        reject(e);
-      });
+
+        mongoose.connect(MONGO_URL, options);
+      }
+
+      console.log(e);
+      reject(e);
+    });
   });
 }
 
@@ -57,7 +53,7 @@ function clearDatabase() {
     for (const i in mongoose.connection.collections) {
       mongoose.connection.collections[i].remove(function() {
         cont++;
-        if(cont >= max) {
+        if (cont >= max) {
           resolve();
         }
       });
@@ -66,10 +62,13 @@ function clearDatabase() {
 }
 
 export function getContext(context: Object) {
-  const dataloaders = Object.keys(loaders).reduce((dataloaders, loaderKey) => ({
-    ...dataloaders,
-    [loaderKey]: loaders[loaderKey].getLoader(),
-  }), {});
+  const dataloaders = Object.keys(loaders).reduce(
+    (dataloaders, loaderKey) => ({
+      ...dataloaders,
+      [loaderKey]: loaders[loaderKey].getLoader(),
+    }),
+    {},
+  );
 
   return {
     ...context,

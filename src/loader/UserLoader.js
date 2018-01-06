@@ -19,8 +19,8 @@ export default class User {
   id: string;
   _id: string;
   name: string;
-  email?: string;
-  active?: boolean;
+  email: string;
+  active: boolean;
 
   constructor(data: UserType, { user }: GraphQLContext) {
     this.id = data.id;

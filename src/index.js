@@ -4,6 +4,11 @@ import app from './app';
 import connectDatabase from './database';
 import { graphqlPort } from './config';
 
+import { SubscriptionServer } from 'subscriptions-transport-ws';
+import { execute, subscribe } from 'graphql';
+
+import { schema } from './schema';
+
 (async () => {
   try {
     const info = await connectDatabase();
@@ -13,6 +18,19 @@ import { graphqlPort } from './config';
     process.exit(1);
   }
 
-  await app.listen(graphqlPort);
+  app.listen(graphqlPort, () => {
+    console.log(`server now listening at :${graphqlPort}`);
+    new SubscriptionServer(
+      {
+        onConnect: connectionParams => console.log('client subscription connected!', connectionParams),
+        onDisconnect: () => console.log('client subscription disconnected!'),
+        execute,
+        subscribe,
+        schema,
+      },
+      { server: app, path: '/subscriptions' },
+    );
+  });
+
   console.log(`Server started on port ${graphqlPort}`);
 })();

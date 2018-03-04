@@ -889,12 +889,12 @@
           "description": null,
           "fields": [
             {
-              "name": "user",
+              "name": "userEdge",
               "description": null,
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "User",
+                "name": "UserEdge",
                 "ofType": null
               },
               "isDeprecated": false,

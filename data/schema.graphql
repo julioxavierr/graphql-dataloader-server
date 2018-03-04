@@ -91,7 +91,7 @@ type User implements Node {
 }
 
 type UserAddedPayload {
-  user: User
+  userEdge: UserEdge
 }
 
 """A connection to a list of items."""

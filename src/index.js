@@ -1,5 +1,6 @@
 // @flow
 import 'babel-polyfill';
+import { createServer } from 'http';
 import app from './app';
 import connectDatabase from './database';
 import { graphqlPort } from './config';
@@ -18,9 +19,11 @@ import { schema } from './schema';
     process.exit(1);
   }
 
-  app.listen(graphqlPort, () => {
+  const server = createServer(app.callback());
+
+  server.listen(graphqlPort, () => {
     console.log(`server now listening at :${graphqlPort}`);
-    new SubscriptionServer(
+    SubscriptionServer.create(
       {
         onConnect: connectionParams => console.log('client subscription connected!', connectionParams),
         onDisconnect: () => console.log('client subscription disconnected!'),
@@ -28,7 +31,10 @@ import { schema } from './schema';
         subscribe,
         schema,
       },
-      { server: app, path: '/subscriptions' },
+      {
+        server,
+        path: '/subscriptions',
+      },
     );
   });
 

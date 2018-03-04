@@ -1,5 +1,4 @@
 // @flow
-
 import 'isomorphic-fetch';
 
 import Koa from 'koa';
@@ -10,10 +9,11 @@ import graphqlHttp from 'koa-graphql';
 import graphqlBatchHttpWrapper from 'koa-graphql-batch';
 import logger from 'koa-logger';
 import Router from 'koa-router';
-import { print } from 'graphql/language';
+// import { print } from 'graphql/language';
+import { graphiqlKoa } from 'apollo-server-koa';
 
 import { schema } from './schema';
-import { jwtSecret } from './config';
+import { jwtSecret, graphqlPort } from './config';
 import { getUser } from './auth';
 import * as loaders from './loader';
 
@@ -22,14 +22,16 @@ const router = new Router();
 
 app.keys = jwtSecret;
 
-const graphqlSettingsPerReq = async (req) => {
-
+const graphqlSettingsPerReq = async req => {
   const { user } = await getUser(req.header.authorization);
 
-  const dataloaders = Object.keys(loaders).reduce((dataloaders, loaderKey) => ({
-    ...dataloaders,
-    [loaderKey]: loaders[loaderKey].getLoader(),
-  }), {});
+  const dataloaders = Object.keys(loaders).reduce(
+    (dataloaders, loaderKey) => ({
+      ...dataloaders,
+      [loaderKey]: loaders[loaderKey].getLoader(),
+    }),
+    {},
+  );
 
   return {
     graphiql: process.env.NODE_ENV !== 'production',
@@ -39,12 +41,12 @@ const graphqlSettingsPerReq = async (req) => {
       req,
       dataloaders,
     },
-    extensions: ({ document, variables, operationName, result }) => {
-      console.log(print(document));
-      console.log(variables);
-      console.log(result);
-    },
-    formatError: (error) => {
+    // extensions: ({ document, variables, operationName, result }) => {
+    // console.log(print(document));
+    // console.log(variables);
+    // console.log(result);
+    // },
+    formatError: error => {
       console.log(error.message);
       console.log(error.locations);
       console.log(error.stack);
@@ -58,13 +60,18 @@ const graphqlSettingsPerReq = async (req) => {
   };
 };
 
-const graphqlServer = convert(graphqlHttp(graphqlSettingsPerReq));
+const graphqlServer = graphqlHttp(graphqlSettingsPerReq);
 
 // graphql batch query route
 router.all('/graphql/batch', bodyParser(), graphqlBatchHttpWrapper(graphqlServer));
-
-// graphql standard route
 router.all('/graphql', graphqlServer);
+router.all(
+  '/graphiql',
+  graphiqlKoa({
+    endpointURL: '/graphql',
+    subscriptionsEndpoint: `ws://localhost:${graphqlPort}/subscriptions`,
+  }),
+);
 
 app.use(logger());
 app.use(cors());

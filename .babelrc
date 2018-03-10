@@ -1,12 +1,13 @@
 {
   "presets": [
     "flow", 
-    "stage-0",
     ["env", {
       "targets": {
-        "node": "current"
+        "node": "current",
+        "browsers": ["last 2 versions", "safari >= 7"]
       }
-    }]
+    }],
+    "stage-0",
   ]
 }
 

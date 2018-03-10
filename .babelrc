@@ -7,7 +7,6 @@
         "browsers": ["last 2 versions", "safari >= 7"]
       }
     }],
-    "stage-0",
+    "stage-0"
   ]
 }
-

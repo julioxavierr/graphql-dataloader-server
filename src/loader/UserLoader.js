@@ -12,6 +12,8 @@ type UserType = {
   name: string,
   password: string,
   email: string,
+  description: string,
+  imageUrl: string,
   active: boolean,
 };
 
@@ -20,12 +22,16 @@ export default class User {
   _id: string;
   name: string;
   email: string;
+  description: string;
+  imageUrl: string;
   active: boolean;
 
   constructor(data: UserType, { user }: GraphQLContext) {
     this.id = data.id;
     this._id = data._id;
     this.name = data.name;
+    this.description = data.description;
+    this.imageUrl = data.imageUrl;
 
     // you can only see your own email, and your active status
     if (user && user._id.equals(data._id)) {

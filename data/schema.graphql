@@ -87,6 +87,8 @@ type User implements Node {
   _id: String
   name: String
   email: String
+  description: String
+  imageUrl: String
   active: Boolean
 }
 

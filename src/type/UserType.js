@@ -1,16 +1,8 @@
 // @flow
 
-import {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLBoolean,
-} from 'graphql';
-import {
-  globalIdField,
-} from 'graphql-relay';
-import {
-  NodeInterface,
-} from '../interface/NodeInterface';
+import { GraphQLObjectType, GraphQLString, GraphQLBoolean } from 'graphql';
+import { globalIdField } from 'graphql-relay';
+import { NodeInterface } from '../interface/NodeInterface';
 
 export default new GraphQLObjectType({
   name: 'User',
@@ -28,6 +20,14 @@ export default new GraphQLObjectType({
     email: {
       type: GraphQLString,
       resolve: user => user.email,
+    },
+    description: {
+      type: GraphQLString,
+      resolve: user => user.description,
+    },
+    imageUrl: {
+      type: GraphQLString,
+      resolve: user => user.imageUrl,
     },
     active: {
       type: GraphQLBoolean,

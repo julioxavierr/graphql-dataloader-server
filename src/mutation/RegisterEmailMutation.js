@@ -1,9 +1,11 @@
 // @flow
-import { GraphQLString, GraphQLNonNull } from 'graphql';
-import { mutationWithClientMutationId } from 'graphql-relay';
+import { GraphQLString, GraphQLNonNull, GraphQLID } from 'graphql';
+import { mutationWithClientMutationId, fromGlobalId } from 'graphql-relay';
+import { UserLoader } from '../loader';
 import { User } from '../model';
 import { generateToken } from '../auth';
 import pubSub, { EVENTS } from '../pubSub';
+import UserType from '../type/UserType';
 
 export default mutationWithClientMutationId({
   name: 'RegisterEmail',
@@ -46,11 +48,16 @@ export default mutationWithClientMutationId({
     await pubSub.publish(EVENTS.USER.ADDED, { UserAdded: { user } });
 
     return {
+      user: await user,
       token: generateToken(user),
       error: null,
     };
   },
   outputFields: {
+    user: {
+      type: UserType,
+      resolve: ({ user }) => user,
+    },
     token: {
       type: GraphQLString,
       resolve: ({ token }) => token,
